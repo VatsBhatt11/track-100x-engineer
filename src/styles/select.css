@@ -1,0 +1,158 @@
+/* select.css */
+
+.select-trigger {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 6px;
+  border: 1px solid hsl(220, 33%, 25%);
+  background-color: hsl(220, 33%, 12%);
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+
+.select-trigger:focus {
+  box-shadow: 0 0 0 2px hsl(25, 95%, 53%);
+}
+
+.select-trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.select-trigger span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.5;
+}
+
+.select-scroll-button {
+  display: flex;
+  cursor: default;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.select-content {
+  position: relative;
+  z-index: 50;
+  max-height: 384px;
+  min-width: 8rem;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background-color: hsl(0, 0%, 98%);
+  color: hsl(220, 33%, 12%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.select-content[data-state="open"] {
+  animation: fadeIn 0.2s ease, zoomIn 0.2s ease;
+}
+
+.select-content[data-state="closed"] {
+  animation: fadeOut 0.2s ease, zoomOut 0.2s ease;
+}
+
+.select-viewport {
+  padding: 4px;
+}
+
+.select-viewport.popper {
+  height: 40px; /* var(--radix-select-trigger-height); */
+  width: 100%;
+  min-width: 160px; /*var(--radix-select-trigger-width);*/
+}
+
+.select-label {
+  padding: 6px 8px 6px 32px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.select-item {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  padding: 6px 8px 6px 32px;
+  border-radius: 4px;
+  cursor: default;
+  user-select: none;
+  outline: none;
+}
+
+.select-item:focus {
+  background-color: hsl(25, 95%, 53%);
+  color: hsl(0, 0%, 98%);
+}
+
+.select-item[data-disabled] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.select-item-indicator {
+  position: absolute;
+  left: 8px;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.select-separator {
+  margin: 4px 0;
+  height: 1px;
+  background-color: #e5e7eb;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes zoomOut {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.95);
+  }
+}

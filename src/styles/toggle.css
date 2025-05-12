@@ -1,0 +1,62 @@
+/* toggle.css */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+  outline: none;
+}
+
+.toggle:focus-visible {
+  outline: 2px solid hsl(25, 95%, 53%);
+  outline-offset: 2px;
+}
+
+.toggle:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.toggle:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.toggle[data-state="on"] {
+  background-color: hsl(25, 95%, 53%);
+  color: hsl(0, 0%, 98%);
+}
+
+/* Variants */
+.toggle.default {
+  background-color: transparent;
+}
+
+.toggle.outline {
+  background-color: transparent;
+  border: 1px solid hsl(220, 33%, 20%);
+}
+
+.toggle.outline:hover:not(:disabled) {
+  background-color: hsl(25, 95%, 53%);
+  color: hsl(0, 0%, 98%);
+}
+
+/* Sizes */
+.toggle.sm {
+  height: 2.25rem; /* h-9 */
+  padding: 0 0.625rem; /* px-2.5 */
+}
+
+.toggle.default-size {
+  height: 2.5rem; /* h-10 */
+  padding: 0 0.75rem; /* px-3 */
+}
+
+.toggle.lg {
+  height: 2.75rem; /* h-11 */
+  padding: 0 1.25rem; /* px-5 */
+}

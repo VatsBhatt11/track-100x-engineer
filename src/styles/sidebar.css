@@ -1,0 +1,91 @@
+/* sidebar.css */
+
+.sidebar-wrapper {
+  display: flex;
+  min-height: 100svh;
+  width: 100%;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 16rem;
+  background-color: hsl(220, 33%, 10%);
+  color: hsl(0, 0%, 90%);
+}
+
+.sidebar-trigger-button {
+  height: 1.75rem;
+  width: 1.75rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar-rail {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: none;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  background: transparent;
+}
+
+.sidebar-mobile-sheet-content {
+  width: 18rem;
+  background-color: hsl(220, 33%, 10%);
+  padding: 0;
+  color: hsl(0, 0%, 90%);
+}
+
+.sidebar-floating,
+.sidebar-inset {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid hsl(220, 33%, 20%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-collapsed-offcanvas {
+  width: 0;
+}
+
+.sidebar-collapsed-icon {
+  width: 3rem;
+}
+
+.sidebar-hidden-md {
+  display: none;
+}
+
+.sidebar-md-visible {
+  display: flex;
+}
+
+.sidebar-content-wrapper {
+  position: fixed;
+  inset-y: 0;
+  z-index: 10;
+  height: 100svh;
+  width: 16rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar-left {
+  left: 0;
+}
+
+.sidebar-left-offcanvas {
+  left: -250px;
+}
+
+.sidebar-right {
+  right: 0;
+}
+
+.sidebar-right-offcanvas {
+  right: -250px;
+}

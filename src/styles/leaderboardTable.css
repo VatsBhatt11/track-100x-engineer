@@ -1,0 +1,120 @@
+.leaderboard-card {
+  width: 100%;
+}
+
+.leaderboard-header {
+  padding-bottom: 0.5rem;
+}
+
+.leaderboard-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sort-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sort-buttons .active {
+  background-color: #e2e8f0;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.leaderboard-table td.mono {
+  font-family: monospace;
+  text-align: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.top-rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+  border-radius: 9999px;
+  background-color: #fb923c;
+  color: white;
+  font-weight: bold;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 9999px;
+  padding: 0.25rem 0.5rem;
+  font-size: 12px;
+  border: 1px solid transparent;
+}
+
+.badge .label {
+  text-transform: capitalize;
+}
+
+.badge-diamond {
+  background-color: #1e3a8a;
+  color: #60a5fa;
+  border-color: #1e40af;
+}
+
+.badge-platinum {
+  background-color: #4c1d95;
+  color: #c084fc;
+  border-color: #581c87;
+}
+
+.badge-gold {
+  background-color: #78350f;
+  color: #facc15;
+  border-color: #92400e;
+}
+
+.badge-silver {
+  background-color: #374151;
+  color: #d1d5db;
+  border-color: #4b5563;
+}
+
+.icon {
+  height: 16px;
+  width: 16px;
+}
+
+.muted {
+  color: #6b7280;
+}

@@ -1,0 +1,59 @@
+.app-container {
+  min-height: 100vh;
+  display: flex;
+}
+
+.app-main {
+  flex: 1;
+  margin-left: 4rem; /* fallback */
+  padding: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .app-main {
+    margin-left: 16rem;
+  }
+}
+
+.app-content {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.progress-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.progress-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.progress-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.progress-description {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  padding: 1rem 0;
+}

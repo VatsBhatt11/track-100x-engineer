@@ -1,0 +1,68 @@
+/* Base container */
+.pagination-nav {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+/* List of pagination items */
+.pagination-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Each pagination item */
+.pagination-item {
+}
+
+/* Link base */
+.pagination-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+/* Active page */
+.pagination-link-active {
+  border-color: #ccc;
+  background-color: #f0f0f0;
+}
+
+/* Inactive (ghost) link */
+.pagination-link-ghost:hover {
+  background-color: #f5f5f5;
+}
+
+/* Previous/Next button styles */
+.pagination-prev,
+.pagination-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+}
+
+/* Ellipsis styles */
+.pagination-ellipsis {
+  display: flex;
+  width: 2.25rem;
+  height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+}

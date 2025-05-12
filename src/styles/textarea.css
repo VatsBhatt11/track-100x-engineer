@@ -1,0 +1,30 @@
+/* textarea.css */
+
+.textarea {
+  display: flex;
+  min-height: 80px;
+  width: 100%;
+  border-radius: 0.375rem; /* rounded-md */
+  border: 1px solid #d1d5db; /* border-input */
+  background-color: #ffffff; /* bg-background */
+  padding: 0.5rem 0.75rem; /* py-2 px-3 */
+  font-size: 0.875rem; /* text-sm */
+  line-height: 1.25rem;
+  color: #111827;
+  resize: vertical;
+  outline: none;
+}
+
+.textarea::placeholder {
+  color: #9ca3af; /* text-muted-foreground */
+}
+
+.textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(25, 95%, 53%), 0 0 0 4px #f9fafb; /* ring-ring + ring-offset */
+}
+
+.textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

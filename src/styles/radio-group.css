@@ -1,0 +1,42 @@
+/* radio-group.css */
+
+.radio-group {
+  display: grid;
+  gap: 0.5rem; /* equivalent to Tailwind's gap-2 */
+}
+
+.radio-group-item {
+  aspect-ratio: 1 / 1;
+  height: 1rem; /* h-4 */
+  width: 1rem; /* w-4 */
+  border-radius: 9999px; /* fully rounded (circle) */
+  border: 1px solid hsl(25, 95%, 53%);
+  color: hsl(25, 95%, 53%);
+  background-color: transparent;
+  position: relative;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.radio-group-item:focus-visible {
+  box-shadow: 0 0 0 2px hsl(25, 95%, 53%); /* Tailwind ring */
+  outline: none;
+}
+
+.radio-group-item:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.radio-group-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio-group-indicator svg {
+  height: 0.625rem; /* h-2.5 */
+  width: 0.625rem; /* w-2.5 */
+  fill: currentColor;
+  color: currentColor;
+}

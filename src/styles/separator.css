@@ -1,0 +1,18 @@
+.separator {
+  flex-shrink: 0;
+  background-color: hsl(
+    220,
+    33%,
+    25%
+  ); /* Replace with actual color if needed */
+}
+
+.separator-horizontal {
+  height: 1px;
+  width: 100%;
+}
+
+.separator-vertical {
+  width: 1px;
+  height: 100%;
+}

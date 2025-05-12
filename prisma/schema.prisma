@@ -1,0 +1,109 @@
+// prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String       @id @default(cuid())
+  email         String       @unique
+  emailVerified DateTime?
+  password      String? // nullable when using Google OAuth
+  name          String?
+  image         String? // profile picture URL
+  profileUrl    String? // X or LinkedIn base URL
+  role          UserRole     @default(PARTICIPANT)
+  bio           String?      @db.Text
+  lastLogin     DateTime? // updated on each signin
+  posts         Post[]
+  badgeAwards   BadgeAward[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  Session       Session[]
+  Account       Account[]
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  url       String   @unique
+  platform  Platform
+  createdAt DateTime @default(now())
+}
+
+model BadgeDefinition {
+  id          String   @id @default(cuid())
+  title       String
+  imageUrl    String // URL to badge icon
+  description String   @db.Text
+  requirement String // e.g. "First post", "7-day streak", etc.
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  badgeAwards BadgeAward[]
+}
+
+model BadgeAward {
+  id              String          @id @default(cuid())
+  user            User            @relation(fields: [userId], references: [id])
+  userId          String
+  badgeDefinition BadgeDefinition @relation(fields: [badgeDefId], references: [id])
+  badgeDefId      String
+  awardedAt       DateTime        @default(now())
+
+  @@unique([userId, badgeDefId])
+}
+
+enum UserRole {
+  ADMIN
+  PARTICIPANT
+}
+
+enum Platform {
+  TWITTER
+  LINKEDIN
+}
+
+// ✂️ ...your existing models
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerAccountId])
+}

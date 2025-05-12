@@ -1,0 +1,48 @@
+.alert-base {
+  position: relative;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid hsl(220, 33%, 25%);
+  background-color: hsl(220, 33%, 12%);
+  color: hsl(0, 0%, 98%);
+}
+
+.alert-default {
+  background-color: hsl(220, 33%, 12%);
+  color: hsl(0, 0%, 98%);
+}
+
+.alert-destructive {
+  background-color: hsl(220, 33%, 12%); /* Optional: override with light red */
+  color: hsl(0, 84.2%, 60.2%);
+  border-color: hsla(0, 84.2%, 60.2%, 0.5);
+}
+
+.alert-title {
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.015em;
+}
+
+.alert-description {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Optional SVG styles if you still use inline SVGs */
+.alert-base svg {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: hsl(0, 0%, 98%);
+}
+
+.alert-destructive svg {
+  color: hsl(0, 84.2%, 60.2%);
+}
+
+.alert-base svg ~ * {
+  padding-left: 1.75rem;
+}

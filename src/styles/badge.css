@@ -1,0 +1,37 @@
+/* badge.css */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border-width: 1px;
+  padding: 2px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s;
+  outline: none;
+}
+
+/* Variants */
+.badge-default {
+  background-color: hsl(25, 95%, 53%);
+  color: hsl(0, 0%, 98%);
+  border-color: transparent;
+}
+
+.badge-secondary {
+  background-color: hsl(220, 33%, 20%);
+  color: hsl(0, 0%, 98%);
+  border-color: transparent;
+}
+
+.badge-destructive {
+  background-color: hsl(0, 84.2%, 60.2%);
+  color: hsl(0, 0%, 98%);
+  border-color: transparent;
+}
+
+.badge-outline {
+  background-color: transparent;
+  color: hsl(0, 0%, 98%);
+  border-color: currentColor;
+}

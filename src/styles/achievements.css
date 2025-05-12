@@ -1,0 +1,30 @@
+/* styles/achievements.css */
+
+/* Margin below breadcrumb */
+.breadcrumb-margin {
+  margin-bottom: 1rem;
+}
+
+/* Header section spacing */
+.header-section {
+  margin-bottom: 1.5rem;
+}
+
+/* Title styling */
+.page-title {
+  font-size: 2rem; /* Equivalent to Tailwind's text-2xl */
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Subtitle styling */
+.page-subtitle {
+  color: #6b7280; /* Approx of Tailwind's text-muted-foreground */
+  font-size: 1rem;
+}
+
+/* Icon size */
+.icon-sm {
+  width: 1rem;
+  height: 1rem;
+}

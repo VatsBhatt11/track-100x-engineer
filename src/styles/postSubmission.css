@@ -1,0 +1,156 @@
+.card-container {
+  max-width: 640px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.submission-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.form-input {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background-color: #f1f5f9;
+  outline: none;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #fb923c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.submit-button:hover {
+  background-color: #f97316;
+}
+
+.submit-button:disabled {
+  background-color: #facc15;
+  cursor: not-allowed;
+}
+
+.card-footer {
+  padding: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.recent-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.submission-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.submission-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.submission-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 70%;
+  overflow: hidden;
+}
+
+.platform-badge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.platform-badge.twitter {
+  background-color: #e2e8f0;
+  color: #000;
+}
+
+.platform-badge.linkedin {
+  background-color: #cbd5e1;
+  color: #000;
+}
+
+.platform-badge.unknown {
+  background-color: transparent;
+  border: 1px solid #cbd5e1;
+  color: #64748b;
+}
+
+.submission-url {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #1e40af;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.submission-url:hover {
+  color: #fb923c;
+}
+
+.submission-date {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.no-submissions {
+  font-size: 0.875rem;
+  color: #64748b;
+}

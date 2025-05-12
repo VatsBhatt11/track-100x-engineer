@@ -1,0 +1,70 @@
+.carousel-root {
+  position: relative;
+}
+
+.carousel-viewport {
+  overflow: hidden;
+}
+
+.carousel-container {
+  display: flex;
+  margin-left: -1rem; /* similar to -ml-4 */
+}
+
+.carousel-vertical {
+  flex-direction: column;
+  margin-left: 0;
+  margin-top: -1rem; /* similar to -mt-4 */
+}
+
+.carousel-slide {
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: 100%;
+  min-width: 0;
+  padding-left: 1rem; /* similar to pl-4 */
+}
+
+.carousel-slide-vertical {
+  padding-left: 0;
+  padding-top: 1rem; /* similar to pt-4 */
+}
+
+.carousel-arrow {
+  position: absolute;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-prev {
+  left: -3rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel-next {
+  right: -3rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel-prev-vertical {
+  top: -3rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(90deg);
+}
+
+.carousel-next-vertical {
+  bottom: -3rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(90deg);
+}
+
+.icon {
+  height: 1rem;
+  width: 1rem;
+}
