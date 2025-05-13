@@ -107,6 +107,9 @@ const PostSubmission = () => {
               className="form-input"
               required
             />
+            <p className="text-sm text-muted-foreground mt-2">
+              Your post must contain the hashtag <span className="font-semibold">#0to100xEngineer</span> to be accepted.
+            </p>
           </div>
 
           <Button

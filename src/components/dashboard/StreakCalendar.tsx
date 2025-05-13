@@ -79,6 +79,13 @@ const StreakCalendar = () => {
     return 3; // 3 or more posts
   };
 
+  const getActivityCount = (date: Date) => {
+    const dateKey = format(date, "yyyy-MM-dd");
+    const count = streakData.get(dateKey) || 0;
+    
+    return count; // 3 or more posts
+  };
+
   const getCurrentStreak = () => {
     let streak = 0;
     let today = new Date();
@@ -169,12 +176,13 @@ const StreakCalendar = () => {
                           const day = days[dayIndex][weekIndex];
                           if (day && day.getMonth() === month.date.getMonth()) {
                             const level = getActivityLevel(day);
+                            const count = getActivityCount(day);
                             const postText =
-                              level === 0
+                            count === 0
                                 ? "No posts"
-                                : level === 1
+                                : count === 1
                                 ? "1 post"
-                                : `${level} posts`;
+                                : `${count} posts`;
 
                             return (
                               <TooltipProvider key={`tooltip-${day.toISOString()}`}>

@@ -3,6 +3,23 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { startOfDay, subDays } from "date-fns";
+import axios from "axios";
+
+async function getTwitterEmbedHtml(tweetUrl: string): Promise<string | null> {
+  try {
+    const response = await axios.get("https://publish.twitter.com/oembed", {
+      params: {
+        url: tweetUrl,
+        omit_script: false,
+      },
+    });
+
+    return response.data.html;
+  } catch (error) {
+    console.error("Error fetching Twitter embed HTML:", error);
+    return null;
+  }
+}
 
 function extractTwitterEmbedUrl(url: string): string | null {
   try {
@@ -11,7 +28,7 @@ function extractTwitterEmbedUrl(url: string): string | null {
     if (!tweetId) return null;
 
     // Construct the embed URL
-    return `https://twitter.com/i/status/${tweetId}`;
+    return `https://x.com/i/status/${tweetId}`;
   } catch (error) {
     console.error("Error extracting Twitter embed URL:", error);
     return null;
@@ -119,48 +136,28 @@ export async function GET() {
       .slice(0, 4); // Get top 4 contributors
 
     // Format posts for response
-    const formattedPosts = posts.map((post) => {
-      let platform = "unknown";
-      let content = post.url;
-      let embedUrl = null;
+    const formattedPosts = await Promise.all(
+      posts.map(async (post) => {
+        let platform = "unknown";
 
-      if (post.url.includes("twitter.com") || post.url.includes("x.com")) {
-        platform = "twitter";
-        embedUrl = extractTwitterEmbedUrl(post.url);
-        if (embedUrl) {
-          content = `<blockquote class="twitter-tweet">
-            <a href="${embedUrl}"></a>
-          </blockquote>
-          <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>`;
+        if (post.url.includes("twitter.com") || post.url.includes("x.com")) {
+          platform = "twitter";
+        } else if (post.url.includes("linkedin.com")) {
+          platform = "linkedin";
         }
-      } else if (post.url.includes("linkedin.com")) {
-        platform = "linkedin";
-        embedUrl = extractLinkedInEmbedUrl(post.url);
-        if (embedUrl) {
-          content = `<iframe 
-            src="${embedUrl}" 
-            height="669" 
-            width="100%" 
-            frameborder="0" 
-            allowfullscreen="" 
-            title="Embedded post"
-            style="max-width: 504px;"
-          ></iframe>`;
-        }
-      }
 
-      return {
-        id: post.id,
-        username: post.user.name || "Anonymous",
-        time: formatTimeAgo(post.createdAt),
-        content,
-        platform,
-        embedUrl,
-        likes: 0, // You might want to implement likes functionality
-        comments: 0, // You might want to implement comments functionality
-        avatarSrc: post.user.image,
-      };
-    });
+        return {
+          id: post.id,
+          username: post.user.name || "Anonymous",
+          time: formatTimeAgo(post.createdAt),
+          content: post.url,
+          platform,
+          likes: 0, // You might want to implement likes functionality
+          comments: 0, // You might want to implement comments functionality
+          avatarSrc: post.user.image,
+        };
+      })
+    );
 
     return NextResponse.json({
       posts: formattedPosts,

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Home, MessageSquare } from "lucide-react"
 import axios from "axios"
+import {Tweet} from 'react-tweet'
 
 import AppLayout from "@/components/layout/AppLayout"
 import {
@@ -23,6 +24,7 @@ interface Post {
   username: string
   time: string
   content: string
+  embedUrl: string
   platform: string
   likes: number
   comments: number
@@ -37,12 +39,19 @@ interface Contributor {
   totalPosts: number
 }
 
+function extractTweetId(tweetUrlOrHtml: string): string | null {
+  const match = tweetUrlOrHtml.match(/status\/(\d+)/);
+  return match ? match[1] : null;
+}
+
+
 const CommunityPost = ({
   id,
   username,
   time,
   content,
   platform,
+  embedUrl,
   likes,
   comments,
   avatarSrc,
@@ -62,7 +71,7 @@ const CommunityPost = ({
 
       <div className="post-content">
         {platform === "twitter" ? (
-          <div dangerouslySetInnerHTML={{ __html: content }} />
+          <Tweet id={extractTweetId(content)||""}/>
         ) : platform === "linkedin" ? (
           <div dangerouslySetInnerHTML={{ __html: content }} />
         ) : (
