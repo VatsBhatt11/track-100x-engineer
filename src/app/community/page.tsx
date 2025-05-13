@@ -1,7 +1,9 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Home, MessageSquare } from "lucide-react"
+import axios from "axios"
 
 import AppLayout from "@/components/layout/AppLayout"
 import {
@@ -16,21 +18,35 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import "@/styles/community.css"
 
-const CommunityPost = ({
-  username,
-  time,
-  content,
-  likes,
-  comments,
-  avatarSrc,
-}: {
+interface Post {
+  id: number
   username: string
   time: string
   content: string
+  platform: string
   likes: number
   comments: number
   avatarSrc?: string
-}) => {
+}
+
+interface Contributor {
+  id: string
+  name: string
+  avatar: string
+  currentStreak: number
+  totalPosts: number
+}
+
+const CommunityPost = ({
+  id,
+  username,
+  time,
+  content,
+  platform,
+  likes,
+  comments,
+  avatarSrc,
+}: Post) => {
   return (
     <div className="community-post">
       <div className="post-header">
@@ -45,7 +61,13 @@ const CommunityPost = ({
       </div>
 
       <div className="post-content">
-        <p className="text-sm">{content}</p>
+        {platform === "twitter" ? (
+          <div dangerouslySetInnerHTML={{ __html: content }} />
+        ) : platform === "linkedin" ? (
+          <div dangerouslySetInnerHTML={{ __html: content }} />
+        ) : (
+          <p className="text-sm">{content}</p>
+        )}
       </div>
 
       <div className="post-actions">
@@ -66,35 +88,47 @@ const CommunityPost = ({
 }
 
 export default function CommunityPage() {
-  const communityPosts = [
-    {
-      id: 1,
-      username: "alex_developer",
-      time: "2 hours ago",
-      content:
-        "Just completed my Day 15 challenge for #0to100xEngineer! Built a simple AI chatbot that can summarize articles. Check it out on my profile.",
-      likes: 24,
-      comments: 5,
-    },
-    {
-      id: 2,
-      username: "sara_coder",
-      time: "Yesterday",
-      content:
-        "Struggling with prompt engineering for my RAG application. Any tips from the community? #0to100xEngineer Day 23 is kicking my butt!",
-      likes: 18,
-      comments: 12,
-    },
-    {
-      id: 3,
-      username: "tech_marco",
-      time: "2 days ago",
-      content:
-        "🎉 Just hit a 30-day streak on my #0to100xEngineer journey! The key is consistency and building in public. Happy to help anyone who's just getting started!",
-      likes: 45,
-      comments: 8,
-    },
-  ]
+  const [posts, setPosts] = useState<Post[]>([])
+  const [contributors, setContributors] = useState<Contributor[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchCommunityData = async () => {
+      try {
+        const response = await axios.get("/api/community")
+        setPosts(response.data.posts)
+        setContributors(response.data.topContributors)
+      } catch (err) {
+        setError("Failed to fetch community data")
+        console.error("Error fetching community data:", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchCommunityData()
+  }, [])
+
+  if (loading) {
+    return (
+      <AppLayout>
+        <div className="flex items-center justify-center h-full">
+          <p>Loading community data...</p>
+        </div>
+      </AppLayout>
+    )
+  }
+
+  if (error) {
+    return (
+      <AppLayout>
+        <div className="flex items-center justify-center h-full">
+          <p className="text-red-500">{error}</p>
+        </div>
+      </AppLayout>
+    )
+  }
 
   return (
     <AppLayout>
@@ -123,56 +157,44 @@ export default function CommunityPage() {
 
       <div className="community-grid">
         <div className="left-column">
-          <div className="post-box">
-            <textarea
-              placeholder="Share your progress with the community..."
-              className="w-full p-3 bg-secondary rounded-lg text-sm mb-3"
-              rows={3}
-            />
-            <div className="post-footer">
-              <div className="post-hit">
-                Add #0to100xEngineer to your post
-              </div>
-              <Button className="post-button">
-                Post Update
-              </Button>
-            </div>
+          <div className="posts-container bg-card rounded-lg p-4 shadow-sm">
+            {posts.map((post) => (
+              <CommunityPost
+                key={post.id}
+                id={post.id}
+                username={post.username}
+                time={post.time}
+                content={post.content}
+                platform={post.platform}
+                likes={post.likes}
+                comments={post.comments}
+                avatarSrc={post.avatarSrc}
+              />
+            ))}
           </div>
-
-          {communityPosts.map((post) => (
-            <CommunityPost
-              key={post.id}
-              username={post.username}
-              time={post.time}
-              content={post.content}
-              likes={post.likes}
-              comments={post.comments}
-            />
-          ))}
         </div>
 
         <div>
           <div className="right-column">
             <h3 className="contributors">Top Contributors</h3>
             <div className="contributors-list">
-              {["alex_developer", "sara_coder", "tech_marco", "jenny_ai"].map(
-                (user, i) => (
-                  <div
-                    key={i}
-                    className="contributor-item"
-                  >
-                    <div className="contributor-info">
-                      <Avatar className="avatar-small">
-                        <AvatarFallback>{user[0]}</AvatarFallback>
-                      </Avatar>
-                      <span className="text-sm">{user}</span>
-                    </div>
-                    <Badge variant="outline" className="streak-badge">
-                      {30 - i * 5}d streak
-                    </Badge>
+              {contributors.map((contributor) => (
+                <div
+                  key={contributor.id}
+                  className="contributor-item"
+                >
+                  <div className="contributor-info">
+                    <Avatar className="avatar-small">
+                      <AvatarImage src={contributor.avatar} />
+                      <AvatarFallback>{contributor.name[0]}</AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm">{contributor.name}</span>
                   </div>
-                )
-              )}
+                  <Badge variant="outline" className="streak-badge">
+                    {contributor.currentStreak}d streak
+                  </Badge>
+                </div>
+              ))}
             </div>
             <Button variant="ghost" size="sm" className="view-all-btn">
               View All
