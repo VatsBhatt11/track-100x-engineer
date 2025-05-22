@@ -34,7 +34,6 @@
   background-color: hsl(220, 33%, 12%);
   outline: none;
   transition: background-color 0.2s;
-  ring-offset: hsl(220 33% 12%);
 }
 
 .slider-thumb:focus-visible {

@@ -15,11 +15,11 @@ const Progress = React.forwardRef<
     )}
     style={{
       position: "relative",
-      height: "1rem",         // h-4
+      height: "0.5rem",         // h-4
       width: "100%",          // w-full
       overflow: "hidden",
       borderRadius: "9999px", // rounded-full
-      backgroundColor: "#e5e7eb", // fallback for `bg-secondary` (light gray)
+      backgroundColor: "hsl(220 ,33% ,20%)", // fallback for `bg-secondary` (light gray)
       ...props.style
     }}
     {...props}
@@ -31,7 +31,7 @@ const Progress = React.forwardRef<
         height: "100%",
         width: "100%",
         flex: 1,
-        backgroundColor: "#3b82f6", // fallback for `bg-primary` (blue-500)
+        backgroundColor: "hsl(25 ,95% ,53%)", // fallback for `bg-primary` (blue-500)
         transform: `translateX(-${100 - value}%)`,
         transition: "transform 0.2s ease"
       }}

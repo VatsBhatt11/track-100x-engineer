@@ -5,10 +5,10 @@
   top: 0;
   height: 100vh;
   width: 64px;
-  background-color: #1e293b; /* bg-sidebar */
+  background-color: hsl(220, 33%, 10%); /* bg-sidebar */
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #334155; /* border-sidebar-border */
+  border-right: 1px solid hsl(220, 33%, 20%); /* border-sidebar-border */
   transition: all 0.3s ease;
 }
 
@@ -85,11 +85,11 @@
 }
 
 .nav-link:hover {
-  background-color: #334155; /* sidebar-accent */
+  background-color: hsl(220, 33%, 16%); /* sidebar-accent */
 }
 
 .nav-link.active {
-  background-color: #334155;
+  background-color: hsl(220, 33%, 16%);
   color: #f97316;
 }
 

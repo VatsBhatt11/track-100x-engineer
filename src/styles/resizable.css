@@ -59,7 +59,7 @@
   width: 0.75rem; /* w-3 */
   align-items: center;
   justify-content: center;
-  border: 1px solid #e5e7eb;
+  border: 1px solid rgb(43, 57, 85);
   border-radius: 0.25rem;
   background-color: #e5e7eb;
 }

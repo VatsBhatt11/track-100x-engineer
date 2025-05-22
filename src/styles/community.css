@@ -35,6 +35,12 @@
   flex-direction: column;
 }
 
+.right-column {
+  border: 1px solid rgb(43, 57, 85);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
 .post-box {
   background-color: #f9fafb;
   padding: 1rem;
@@ -46,7 +52,7 @@
   width: 100%;
   padding: 0.75rem;
   border-radius: 0.5rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid rgb(43, 57, 85);
   margin-bottom: 0.75rem;
   font-size: 0.875rem;
   resize: vertical;
@@ -75,11 +81,8 @@
 
 .community-post {
   padding: 1rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.community-post:last-child {
-  border-bottom: none;
+  border: 1px solid hsl(220, 33%, 20%);
+  border-radius: 0.5rem;
 }
 
 .post-header {
@@ -104,14 +107,6 @@
   color: #6b7280;
 }
 
-/* Embedded content styles */
-.post-content {
-  margin-bottom: 1rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
 /* Twitter embed styles */
 .twitter-tweet {
   margin: 0 !important;
@@ -129,7 +124,7 @@
 
 .linkedin-post {
   background: var(--card);
-  border: 1px solid var(--border);
+  border: 1px solid rgb(43, 57, 85);
   border-radius: 0.5rem;
   padding: 1rem;
 }
@@ -205,10 +200,7 @@
 }
 
 .contributors {
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
   padding: 1rem;
-  margin-bottom: 1.5rem;
 }
 
 .contributors h3 {
@@ -218,6 +210,7 @@
 
 .contributors-list {
   display: flex;
+  padding: 0 1rem;
   flex-direction: column;
   gap: 0.75rem;
 }
@@ -241,17 +234,16 @@
 
 .streak-badge {
   background-color: rgba(0, 0, 0, 0.05);
-  border: 1px solid #d1d5db;
+  border: 1px solid rgb(43, 57, 85);
   font-size: 0.75rem;
 }
 
 .view-all-btn {
-  margin-top: 0.75rem;
   width: 100%;
 }
 
 .popular-topics {
-  border: 1px solid #e5e7eb;
+  border: 1px solid rgb(43, 57, 85);
   border-radius: 0.5rem;
   padding: 1rem;
 }
@@ -268,9 +260,7 @@
 }
 
 .topic-badge {
-  background-color: #f3f4f6;
   padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
   cursor: pointer;
 }
 
@@ -281,13 +271,7 @@
 }
 
 .posts-container .community-post {
-  border-bottom: 1px solid var(--border);
   padding-bottom: 1rem;
-}
-
-.posts-container .community-post:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
 }
 
 blockquote.twitter-tweet {

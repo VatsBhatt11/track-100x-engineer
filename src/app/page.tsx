@@ -1,36 +1,33 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import AppLayout from "@/components/layout/AppLayout"
 import StreakCalendar from "@/components/dashboard/StreakCalendar"
 import PostSubmission from "@/components/dashboard/PostSubmission"
 import UserStatsCards from "@/components/dashboard/UserStatsCards"
 import LeaderboardTable from "@/components/leaderboard/LeaderboardTable"
-import LoginForm from "@/components/auth/LoginForm"
+import AuthContainer from "@/components/auth/AuthContainer"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 import styles from './HomePage.module.css' // ✅ Import the styles
 
 const HomePage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const { data: session, status } = useSession()
+  const router = useRouter()
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user")
-
-    try {
-      const user = storedUser ? JSON.parse(storedUser) : null
-      setIsLoggedIn(!!user?.email)
-    } catch {
-      setIsLoggedIn(false)
-    } finally {
-      setLoading(false)
+    if (status === "authenticated") {
+      router.refresh()
     }
-  }, [])
+  }, [status, router])
 
-  if (loading) return <div className={styles.loadingContainer}>Loading...</div>
+  if (status === "loading") {
+    return <div className={styles.loadingContainer}>Loading...</div>
+  }
 
-  if (!isLoggedIn) {
+  if (status === "unauthenticated") {
     return (
       <div className={styles.loginContainer}>
         <div className={styles.loginHeader}>
@@ -46,7 +43,7 @@ const HomePage = () => {
           </p>
         </div>
 
-        <LoginForm />
+        <AuthContainer />
 
         <div className={styles.footerText}>
           <p>Need an account? Contact your cohort admin.</p>
@@ -60,22 +57,26 @@ const HomePage = () => {
       <div className={styles.dashboardHeader}>
         <div>
           <h1 className={styles.dashboardTitle}>Dashboard</h1>
-          <p className={styles.dashboardSubtitle}>Track your progress in the #0to100xEngineer challenge</p>
+          <p className={styles.dashboardSubtitle}>Track your progress and stay motivated</p>
         </div>
-        <Button className={styles.postButton}>Post Today</Button>
+        <Button className={styles.postButton}>New Post</Button>
       </div>
 
       <div className={styles.sectionSpacing}>
         <UserStatsCards />
+      </div>
 
-        <div className={styles.twoColumnLayout}>
+      <div className={styles.twoColumnLayout}>
+        <div>
           <StreakCalendar />
+        </div>
+        <div>
           <PostSubmission />
         </div>
+      </div>
 
-        <div className={styles.leaderboardWrapper}>
-          <LeaderboardTable />
-        </div>
+      <div className={styles.leaderboardWrapper}>
+        <LeaderboardTable />
       </div>
     </AppLayout>
   )

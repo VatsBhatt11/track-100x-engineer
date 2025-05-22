@@ -1,11 +1,11 @@
 'use client'
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Trophy, Award, Star } from "lucide-react";
 import '@/styles/leaderboardTable.css'
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 interface LeaderboardEntry {
   id: string;
@@ -15,11 +15,11 @@ interface LeaderboardEntry {
   currentStreak: number;
   totalPosts: number;
   badge: string | null;
+  longestStreak: number;
 }
 
 const LeaderboardTable = () => {
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
-  const [sortBy, setSortBy] = useState<"rank" | "currentStreak" | "totalPosts">("rank");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -62,9 +62,16 @@ const LeaderboardTable = () => {
   };
   
   const sortedData = [...leaderboardData].sort((a, b) => {
-    if (sortBy === "rank") return a.rank - b.rank;
-    if (sortBy === "currentStreak") return b.currentStreak - a.currentStreak;
-    return b.totalPosts - a.totalPosts;
+    // First sort by total posts
+    if (b.totalPosts !== a.totalPosts) {
+      return b.totalPosts - a.totalPosts;
+    }
+    // Then by current streak
+    if (b.currentStreak !== a.currentStreak) {
+      return b.currentStreak - a.currentStreak;
+    }
+    // Finally by longest streak
+    return b.longestStreak - a.longestStreak;
   });
   
   if (error) {
@@ -79,34 +86,6 @@ const LeaderboardTable = () => {
 
   return(
     <Card className="leaderboard-card">
-      <CardHeader className="leaderboard-header">
-        <CardTitle className="leaderboard-title">
-          <span>Leaderboard</span>
-          <div className="sort-buttons">
-            <Button 
-              onClick={() => setSortBy("rank")} 
-              className={sortBy === "rank" ? "active" : ""}
-              disabled={isLoading}
-            >
-              Rank
-            </Button>
-            <Button 
-              onClick={() => setSortBy("currentStreak")} 
-              className={sortBy === "currentStreak" ? "active" : ""}
-              disabled={isLoading}
-            >
-              Streaks
-            </Button>
-            <Button 
-              onClick={() => setSortBy("totalPosts")} 
-              className={sortBy === "totalPosts" ? "active" : ""}
-              disabled={isLoading}
-            >
-              Posts
-            </Button>
-          </div>
-        </CardTitle>
-      </CardHeader>
       <CardContent>
         {isLoading ? (
           <div className="loading-message">Loading leaderboard data...</div>
@@ -123,18 +102,21 @@ const LeaderboardTable = () => {
                 </tr>
               </thead>
               <tbody>
-                {sortedData.map((entry) => (
+                {sortedData.map((entry, index) => (
                   <tr key={entry.id}>
                     <td>
-                      {entry.rank <= 3 ? (
-                        <span className="top-rank">{entry.rank}</span>
+                      {index + 1 <= 3 ? (
+                        <span className="top-rank">{index + 1}</span>
                       ) : (
-                        entry.rank
+                        index + 1
                       )}
                     </td>
                     <td>
                       <div className="user-info">
-                        <div className="avatar"><img src={entry.avatar}/></div>
+                      <Avatar className="avatar">
+                        <AvatarImage src={entry.avatar} />
+                        <AvatarFallback>{entry.name[0]}</AvatarFallback>
+                      </Avatar>
                         <span>{entry.name}</span>
                       </div>
                     </td>

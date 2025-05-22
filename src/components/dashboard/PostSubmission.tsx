@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
-import { Badge } from "@/components/ui/badge";
 import '@/styles/postSubmission.css'
 
 interface Submission {
@@ -19,27 +18,7 @@ interface Submission {
 const PostSubmission = () => {
   const [url, setUrl] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [recentSubmissions, setRecentSubmissions] = useState<Submission[]>([]);
-
-  // Fetch recent submissions on component mount
-  useEffect(() => {
-    fetchRecentSubmissions();
-  }, []);
-
-  const fetchRecentSubmissions = async () => {
-    try {
-      const { data } = await axios.get<Submission[]>("/api/posts");
-      setRecentSubmissions(data);
-    } catch (error) {
-      console.error("Error fetching submissions:", error);
-      toast({
-        title: "Error",
-        description: "Failed to fetch recent submissions",
-        variant: "destructive",
-      });
-    }
-  };
-
+ 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmedUrl = url.trim();
@@ -56,12 +35,9 @@ const PostSubmission = () => {
     setIsSubmitting(true);
 
     try {
-      const { data } = await axios.post<Submission>("/api/posts", {
+     await axios.post<Submission>("/api/posts", {
         url: trimmedUrl,
       });
-
-      // Refresh the recent submissions
-      await fetchRecentSubmissions();
       
       setUrl("");
       toast({
@@ -121,51 +97,6 @@ const PostSubmission = () => {
           </Button>
         </form>
       </CardContent>
-
-      <CardFooter className="card-footer">
-        <h4 className="recent-title">Recent Submissions</h4>
-        {recentSubmissions.length > 0 ? (
-          <ul className="submission-list">
-            {recentSubmissions.map((submission) => (
-              <li
-                key={submission.id}
-                className="submission-item"
-              >
-                <div className="submission-link">
-                  <Badge
-                    variant={
-                      submission.platform === "twitter"
-                        ? "default"
-                        : submission.platform === "linkedin"
-                        ? "secondary"
-                        : "outline"
-                    }
-                  >
-                    {submission.platform === "twitter"
-                      ? "Twitter"
-                      : submission.platform === "linkedin"
-                      ? "LinkedIn"
-                      : "Unknown"}
-                  </Badge>
-                  <a
-                    href={submission.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="submission-url" 
-                  >
-                    {submission.url}
-                  </a>
-                </div>
-                <span className="submission-date">
-                  {submission.date}
-                </span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="no-submissions">No recent submissions</p>
-        )}
-      </CardFooter>
     </Card>
   );
 };

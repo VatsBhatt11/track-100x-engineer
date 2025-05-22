@@ -1,59 +1,64 @@
-// components/auth/LoginForm.tsx
 'use client'
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import '@/styles/loginForm.css'
 
-interface LoginFormProps {
-  onSwitchToSignup: () => void;
+interface SignupFormProps {
+  onSwitchToLogin: () => void;
 }
 
-const LoginForm = ({ onSwitchToSignup }: LoginFormProps) => {
+const SignupForm = ({ onSwitchToLogin }: SignupFormProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const { status } = useSession();
 
-  // Redirect if already authenticated
-  if (status === "authenticated") {
-    router.push("/");
-    return null;
-  }
-
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
+    if (password !== confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match",
+        variant: "destructive",
+      });
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       });
 
-      if (result?.error) {
-        toast({
-          title: "Error",
-          description: "Invalid email or password",
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Logged in successfully",
-          description: "Welcome to Track100xEngineers!",
-        });
-        router.push("/");
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Something went wrong');
       }
+
+      toast({
+        title: "Success",
+        description: "Account created successfully! Please login.",
+      });
+      
+      // Switch to login form after successful signup
+      onSwitchToLogin();
     } catch (error) {
       toast({
         title: "Error",
-        description: "Something went wrong. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to create account",
         variant: "destructive",
       });
     } finally {
@@ -64,11 +69,11 @@ const LoginForm = ({ onSwitchToSignup }: LoginFormProps) => {
   return (
     <Card className="login-card">
       <CardHeader>
-        <CardTitle className="login-title">Login to Track100x</CardTitle>
+        <CardTitle className="login-title">Create Account</CardTitle>
       </CardHeader>
 
       <CardContent>
-        <form onSubmit={handleLogin} className="login-form">
+        <form onSubmit={handleSignup} className="login-form">
           <div className="input-group">
             <label htmlFor="email" className="input-label">
               Email
@@ -99,21 +104,36 @@ const LoginForm = ({ onSwitchToSignup }: LoginFormProps) => {
             />
           </div>
 
+          <div className="input-group">
+            <label htmlFor="confirmPassword" className="input-label">
+              Confirm Password
+            </label>
+            <Input
+              id="confirmPassword"
+              type="password"
+              placeholder="••••••••"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              className="input-field"
+            />
+          </div>
+
           <Button
             type="submit"
             className="login-button"
             disabled={isLoading}
           >
-            {isLoading ? "Logging in..." : "Login"}
+            {isLoading ? "Creating account..." : "Sign up"}
           </Button>
         </form>
       </CardContent>
 
       <CardFooter className="login-footer">
         <p className="footer-text">
-          Don&apos;t have an account?{" "}
-          <button onClick={onSwitchToSignup} className="footer-link">
-            Sign up
+          Already have an account?{" "}
+          <button onClick={onSwitchToLogin} className="footer-link">
+            Login
           </button>
         </p>
       </CardFooter>
@@ -121,4 +141,4 @@ const LoginForm = ({ onSwitchToSignup }: LoginFormProps) => {
   );
 };
 
-export default LoginForm;
+export default SignupForm; 

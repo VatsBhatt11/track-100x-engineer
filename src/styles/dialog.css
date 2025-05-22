@@ -16,10 +16,11 @@
   max-width: 32rem;
   transform: translate(-50%, -50%);
   gap: 1rem;
-  border: 1px solid hsl(220, 33%, 25%);
+  border: 1px solid rgb(43, 57, 85);
   background-color: hsl(220, 33%, 12%);
   padding: 1.5rem;
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
   animation: zoomIn 200ms ease-out;
 }
 

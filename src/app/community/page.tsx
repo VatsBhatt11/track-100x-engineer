@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { Home, MessageSquare } from "lucide-react"
+import { Home } from "lucide-react"
 import axios from "axios"
 import {Tweet} from 'react-tweet'
 
@@ -77,20 +77,6 @@ const CommunityPost = ({
         ) : (
           <p className="text-sm">{content}</p>
         )}
-      </div>
-
-      <div className="post-actions">
-        <div className="post-buttons">
-          <Button variant="ghost" size="sm" className="text-muted-foreground">
-            👍 {likes}
-          </Button>
-          <Button variant="ghost" size="sm" className="text-muted-foreground">
-            <MessageSquare className="mr-1 h-4 w-4" /> {comments}
-          </Button>
-        </div>
-        <Button variant="outline" size="sm">
-          Share
-        </Button>
       </div>
     </div>
   )

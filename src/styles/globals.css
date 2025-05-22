@@ -187,7 +187,7 @@ button {
 
 /* Borders */
 .border {
-  border: 1px solid #ccc;
+  border: 1px solid rgb(43, 57, 85);
 }
 
 .border-radius {
@@ -289,4 +289,33 @@ button {
 
 .accordion-trigger[data-state="open"] svg {
   transform: rotate(180deg);
+}
+
+/* Common Page Layout Styles */
+.parameter-page {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.parameter-page-header {
+  margin-bottom: 1.5rem;
+}
+
+.parameter-page-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.parameter-page-subtitle {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.parameter-page-content {
+  background-color: hsl(220, 33%, 12%);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
 }

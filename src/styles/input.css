@@ -5,7 +5,7 @@
   height: 2.5rem; /* h-10 */
   width: 100%;
   border-radius: 0.375rem; /* rounded-md */
-  border: 1px solid #d1d5db; /* border-input */
+  border: 1px solid rgb(43, 57, 85);
   background-color: #ffffff; /* bg-background */
   padding: 0.5rem 0.75rem; /* px-3 py-2 */
   font-size: 1rem; /* text-base */

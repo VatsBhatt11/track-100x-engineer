@@ -1,4 +1,3 @@
-// app/profile/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -15,21 +14,20 @@ import { Home } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { formatDistanceToNow } from "date-fns";
 import { toast } from "@/components/ui/use-toast";
 
 import '@/styles/profile.css';
+import { Tweet } from "react-tweet";
 
 interface User {
   name: string;
-  username: string;
+  email: string;
   bio: string;
   currentStreak: number;
   longestStreak: number;
@@ -41,60 +39,50 @@ interface Post {
   id: string;
   content: string;
   platform: string;
-  date: string;
-  likes: number;
-}
-
-interface Achievement {
-  name: string;
-  description: string;
-  achieved: boolean;
 }
 
 interface ProfileData {
   user: User;
   recentPosts: Post[];
-  achievements: Achievement[];
 }
 
-interface SettingsForm {
-  name: string;
-  username: string;
-  bio: string;
-  emailNotifications: boolean;
-}
 
 const Profile = () => {
-  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [user, setUser] = useState<User>({
+    name: "",
+    email: "",
+    bio: "",
+    currentStreak: 0,
+    longestStreak: 0,
+    totalPosts: 0,
+    avatar: "",
+  });
+  const [recentPosts, setRecentPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [settings, setSettings] = useState<SettingsForm>({
+  const [settings, setSettings] = useState({
     name: "",
-    username: "",
     bio: "",
-    emailNotifications: true,
   });
-  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     fetchProfileData();
   }, []);
 
   useEffect(() => {
-    if (profileData) {
+    if (user) {
       setSettings({
-        name: profileData.user.name,
-        username: profileData.user.username,
-        bio: profileData.user.bio,
-        emailNotifications: true,
+        name: user.name,
+        bio: user.bio,
       });
     }
-  }, [profileData]);
+  }, [user]);
 
   const fetchProfileData = async () => {
     try {
       const { data } = await axios.get<ProfileData>('/api/profile');
-      setProfileData(data);
+      setUser(data.user);
+      setRecentPosts(data.recentPosts);
     } catch (error) {
       console.error('Error fetching profile data:', error);
       setError('Failed to load profile data');
@@ -103,33 +91,28 @@ const Profile = () => {
     }
   };
 
-  const handleSettingsChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value, type } = e.target;
-    setSettings(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
-    }));
-  };
+  // const handleSettingsChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => {
+  //   const { name, value, type } = e.target;
+  //   setSettings(prev => ({
+  //     ...prev,
+  //     [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
+  //   }));
+  // };
 
   const handleSaveSettings = async () => {
-    setIsSaving(true);
     try {
       const { data } = await axios.put('/api/profile/update', settings);
       
-      if (profileData) {
-        setProfileData({
-          ...profileData,
-          user: {
-            ...profileData.user,
-            name: data.user.name,
-            username: data.user.username,
-            bio: data.user.bio,
-          },
+      if (user) {
+        setUser({
+          ...user,
+          name: data.user.name,
+          bio: data.user.bio,
         });
       }
-
+      
       toast({
         title: "Success",
         description: "Profile updated successfully",
@@ -141,28 +124,53 @@ const Profile = () => {
         description: "Failed to update profile",
         variant: "destructive",
       });
-    } finally {
-      setIsSaving(false);
     }
+  };
+
+  const handleSettingsSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSaveSettings();
   };
 
   if (isLoading) {
     return (
       <AppLayout>
-        <div className="loading-message">Loading profile data...</div>
+        <div className="loading">Loading profile...</div>
       </AppLayout>
     );
   }
 
-  if (error || !profileData) {
+  if (error || !user) {
     return (
       <AppLayout>
-        <div className="error-message">{error || 'Failed to load profile data'}</div>
+        <div className="error">{error || 'Failed to load profile'}</div>
       </AppLayout>
     );
   }
 
-  const { user, recentPosts, achievements } = profileData;
+  function extractTweetId(tweetUrlOrHtml: string): string | null {
+    const match = tweetUrlOrHtml.match(/status\/(\d+)/);
+    return match ? match[1] : null;
+  }
+
+  const CommunityPost = ({
+    content,
+    platform,
+  }: Post) => {
+    return (
+      <div className="community-post">
+        <div className="post-content">
+          {platform === "twitter" ? (
+            <Tweet id={extractTweetId(content)||""}/>
+          ) : platform === "linkedin" ? (
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+          ) : (
+            <p className="text-sm">{content}</p>
+          )}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <AppLayout>
@@ -191,7 +199,7 @@ const Profile = () => {
 
           <div className="profile-meta">
             <h1 className="profile-name">{user.name}</h1>
-            <p className="profile-username">@{user.username}</p>
+            <p className="profile-email">{user.email}</p>
             <p className="profile-bio">{user.bio}</p>
 
             <div className="profile-stats">
@@ -209,115 +217,78 @@ const Profile = () => {
               </div>
             </div>
           </div>
-
-          <Button>Edit Profile</Button>
         </div>
       </div>
 
       <Tabs defaultValue="posts" className="profile-tabs">
         <TabsList className="tab-list">
           <TabsTrigger value="posts">Posts</TabsTrigger>
-          <TabsTrigger value="achievements">Achievements</TabsTrigger>
           <TabsTrigger value="settings">Settings</TabsTrigger>
         </TabsList>
 
         <TabsContent value="posts">
           <div className="post-list">
-            {recentPosts.map((post) => (
-              <div key={post.id} className="post-card">
-                <div className="post-header">
-                  <Badge variant="outline">{post.platform}</Badge>
-                  <span className="post-date">
-                    {formatDistanceToNow(new Date(post.date), { addSuffix: true })}
-                  </span>
-                </div>
-                <p className="post-content">{post.content}</p>
-                <div className="post-likes">{post.likes} likes</div>
+            {recentPosts.length > 0 ? (
+              recentPosts.map((post) => (
+                <CommunityPost
+                key={post.id}
+                id={post.id}
+                content={post.content}
+                platform={post.platform}
+              />
+                // <div key={post.id} className="post-card">
+                //   <div className="post-header">
+                //     <Badge variant="outline">{post.platform}</Badge>
+                //     <span className="post-date">
+                //       {formatDistanceToNow(new Date(post.date), { addSuffix: true })}
+                //     </span>
+                //   </div>
+                //   <div className="post-content">
+                //     <iframe
+                //       src={post.content}
+                //       width="100%"
+                //       height="400"
+                //       frameBorder="0"
+                //       allowFullScreen
+                //     />
+                //   </div>
+                // </div>
+              ))
+            ) : (
+              <div className="no-posts">
+                <p>No posts yet. Start your journey by submitting your first post!</p>
               </div>
-            ))}
+            )}
           </div>
         </TabsContent>
 
-        <TabsContent value="achievements">
-          <div className="achievement-grid">
-            {achievements.map((achievement, index) => (
-              <div
-                key={index}
-                className={`achievement-card ${
-                  achievement.achieved ? "unlocked" : "locked"
-                }`}
-              >
-                <div className="achievement-header">
-                  <h3 className="achievement-title">{achievement.name}</h3>
-                  {achievement.achieved ? (
-                    <Badge className="achievement-badge">Unlocked</Badge>
-                  ) : (
-                    <Badge variant="outline">Locked</Badge>
-                  )}
-                </div>
-                <p className="achievement-desc">{achievement.description}</p>
-              </div>
-            ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="settings">
-          <div className="settings-card">
-            <h2 className="settings-title">Account Settings</h2>
-            <div className="settings-form">
+          <TabsContent value="settings">
+            <div className="settings-card">
+              <h2 className="settings-title">Edit Profile</h2>
+            <form className="settings-form" onSubmit={handleSettingsSubmit}>
               <div className="form-group">
-                <label className="form-label">Display Name</label>
+                <label className="form-label">Name</label>
                 <input
                   type="text"
-                  name="name"
                   className="form-input"
                   value={settings.name}
-                  onChange={handleSettingsChange}
-                />
-              </div>
-              <div className="form-group">
-                <label className="form-label">Username</label>
-                <input
-                  type="text"
-                  name="username"
-                  className="form-input"
-                  value={settings.username}
-                  onChange={handleSettingsChange}
+                  onChange={(e) => setSettings({ ...settings, name: e.target.value })}
                 />
               </div>
               <div className="form-group">
                 <label className="form-label">Bio</label>
                 <textarea
-                  name="bio"
                   className="form-input"
-                  rows={3}
                   value={settings.bio}
-                  onChange={handleSettingsChange}
+                  onChange={(e) => setSettings({ ...settings, bio: e.target.value })}
                 />
               </div>
-              <div className="form-group">
-                <label className="form-label">Email Notifications</label>
-                <div className="checkbox-group">
-                  <input
-                    type="checkbox"
-                    id="notifications"
-                    name="emailNotifications"
-                    checked={settings.emailNotifications}
-                    onChange={handleSettingsChange}
-                  />
-                  <label htmlFor="notifications">Receive daily streak reminders</label>
-                </div>
-              </div>
-              <Button 
-                className="save-button"
-                onClick={handleSaveSettings}
-                disabled={isSaving}
-              >
-                {isSaving ? "Saving..." : "Save Changes"}
+              <Button type="submit" className="save-button">
+                Save Changes
               </Button>
+            </form>
             </div>
-          </div>
-        </TabsContent>
+          </TabsContent>
       </Tabs>
     </AppLayout>
   );

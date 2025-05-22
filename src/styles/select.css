@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: space-between;
   border-radius: 6px;
-  border: 1px solid hsl(220, 33%, 25%);
+  border: 1px solid rgb(43, 57, 85);
   background-color: hsl(220, 33%, 12%);
   padding: 8px 12px;
   font-size: 14px;
@@ -51,7 +51,7 @@
   max-height: 384px;
   min-width: 8rem;
   overflow: hidden;
-  border: 1px solid #e5e7eb;
+  border: 1px solid rgb(43, 57, 85);
   border-radius: 6px;
   background-color: hsl(0, 0%, 98%);
   color: hsl(220, 33%, 12%);

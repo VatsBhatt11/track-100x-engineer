@@ -36,6 +36,12 @@ export async function GET() {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
+    const totalPosts = await prisma.post.count({
+      where: {
+        userId: session.user.id,
+      },
+    });
+
     // Calculate current streak
     let currentStreak = 0;
     let currentDate = new Date();
@@ -100,11 +106,11 @@ export async function GET() {
     return NextResponse.json({
       user: {
         name: user.name || "Anonymous",
-        username: user.email?.split("@")[0] || "user",
+        email: user.email,
         bio: user.bio || "",
         currentStreak,
         longestStreak,
-        totalPosts: user.posts.length,
+        totalPosts,
         avatar: user.image || "",
       },
       recentPosts,

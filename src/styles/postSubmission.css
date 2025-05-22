@@ -1,16 +1,15 @@
 .card-container {
   max-width: 640px;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: hsl(220, 33%, 15%);
   border-radius: 8px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgb(43, 57, 85);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   overflow: hidden;
 }
 
 .card-header {
   padding: 1.5rem;
-  border-bottom: 1px solid #e2e8f0;
 }
 
 .card-title {
@@ -44,8 +43,9 @@
   padding: 0.5rem 0.75rem;
   font-size: 1rem;
   border-radius: 6px;
-  border: 1px solid #cbd5e1;
-  background-color: #f1f5f9;
+  color: #ffffff;
+  border: 1px solid rgb(43, 57, 85);
+  background-color: hsl(220, 33%, 20%);
   outline: none;
 }
 
@@ -128,7 +128,7 @@
 
 .platform-badge.unknown {
   background-color: transparent;
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgb(43, 57, 85);
   color: #64748b;
 }
 

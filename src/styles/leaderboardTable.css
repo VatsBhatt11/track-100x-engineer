@@ -35,12 +35,11 @@
   padding: 0.75rem 1rem;
   text-align: left;
   font-size: 14px;
-  border-bottom: 1px solid #d1d5db;
+  border-bottom: 1px solid hsl(220, 33%, 25%);
 }
 
 .leaderboard-table td.mono {
   font-family: monospace;
-  text-align: center;
 }
 
 .user-info {

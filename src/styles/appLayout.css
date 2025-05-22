@@ -16,7 +16,7 @@
 }
 
 .app-content {
-  max-width: 80rem;
+  /* max-width: 80rem; */
   margin-left: auto;
   margin-right: auto;
 }
@@ -24,7 +24,7 @@
 .progress-section {
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #d1d5db;
+  border-bottom: 1px solid hsl(220, 33%, 25%);
 }
 
 .progress-header {

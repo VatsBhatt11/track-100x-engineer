@@ -2,7 +2,7 @@
 .hover-card-content {
   z-index: 50;
   width: 16rem; /* w-64 */
-  border: 1px solid #e5e7eb; /* border color */
+  border: 1px solid rgb(43, 57, 85);
   background-color: hsl(
     220,
     33%,

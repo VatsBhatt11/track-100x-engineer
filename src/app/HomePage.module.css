@@ -104,14 +104,21 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 @media (min-width: 1024px) {
   .twoColumnLayout {
-    grid-template-columns: 1fr 1fr;
+    /* grid-template-columns: 1fr 1fr; */
+    min-width: 0; /* Prevent grid items from overflowing */
   }
 }
 
 .leaderboardWrapper {
   padding-top: 1rem;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
