@@ -9,7 +9,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   format,
-  eachDayOfInterval,
   startOfMonth,
   endOfMonth,
   getDay,

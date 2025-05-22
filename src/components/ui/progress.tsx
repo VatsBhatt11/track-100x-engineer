@@ -32,7 +32,7 @@ const Progress = React.forwardRef<
         width: "100%",
         flex: 1,
         backgroundColor: "hsl(25 ,95% ,53%)", // fallback for `bg-primary` (blue-500)
-        transform: `translateX(-${100 - value}%)`,
+        transform: `translateX(-${100 - (value ?? 0)}%)`,
         transition: "transform 0.2s ease"
       }}
     />

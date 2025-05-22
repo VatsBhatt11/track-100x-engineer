@@ -56,6 +56,7 @@ const LoginForm = ({ onSwitchToSignup }: LoginFormProps) => {
         description: "Something went wrong. Please try again.",
         variant: "destructive",
       });
+      console.error("Login error:", error);
     } finally {
       setIsLoading(false);
     }

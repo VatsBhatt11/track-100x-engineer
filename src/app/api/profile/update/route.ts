@@ -12,7 +12,7 @@ export async function PUT(request: Request) {
     }
 
     const body = await request.json();
-    const { name, username, bio, emailNotifications } = body;
+    const { name, username, bio } = body;
 
     // Validate input
     if (!name || !username) {

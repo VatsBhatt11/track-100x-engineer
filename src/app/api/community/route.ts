@@ -3,51 +3,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { startOfDay, subDays } from "date-fns";
-import axios from "axios";
-
-async function getTwitterEmbedHtml(tweetUrl: string): Promise<string | null> {
-  try {
-    const response = await axios.get("https://publish.twitter.com/oembed", {
-      params: {
-        url: tweetUrl,
-        omit_script: false,
-      },
-    });
-
-    return response.data.html;
-  } catch (error) {
-    console.error("Error fetching Twitter embed HTML:", error);
-    return null;
-  }
-}
-
-function extractTwitterEmbedUrl(url: string): string | null {
-  try {
-    // Extract tweet ID from URL
-    const tweetId = url.split("/").pop()?.split("?")[0];
-    if (!tweetId) return null;
-
-    // Construct the embed URL
-    return `https://x.com/i/status/${tweetId}`;
-  } catch (error) {
-    console.error("Error extracting Twitter embed URL:", error);
-    return null;
-  }
-}
-
-function extractLinkedInEmbedUrl(url: string): string | null {
-  try {
-    // Extract post ID from URL
-    const postId = url.split("/").pop()?.split("?")[0];
-    if (!postId) return null;
-
-    // Construct the embed URL
-    return `https://www.linkedin.com/embed/feed/update/urn:li:share:${postId}?collapsed=1`;
-  } catch (error) {
-    console.error("Error extracting LinkedIn embed URL:", error);
-    return null;
-  }
-}
 
 export async function GET() {
   try {

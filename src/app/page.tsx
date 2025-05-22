@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation"
 import styles from './HomePage.module.css' // ✅ Import the styles
 
 const HomePage = () => {
-  const { data: session, status } = useSession()
+  const { status } = useSession()
   const router = useRouter()
 
   useEffect(() => {

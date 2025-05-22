@@ -24,10 +24,7 @@ interface Post {
   username: string
   time: string
   content: string
-  embedUrl: string
   platform: string
-  likes: number
-  comments: number
   avatarSrc?: string
 }
 
@@ -46,16 +43,12 @@ function extractTweetId(tweetUrlOrHtml: string): string | null {
 
 
 const CommunityPost = ({
-  id,
   username,
   time,
   content,
   platform,
-  embedUrl,
-  likes,
-  comments,
   avatarSrc,
-}: Post) => {
+}: Omit<Post, 'id'>) => {
   return (
     <div className="community-post">
       <div className="post-header">
@@ -156,13 +149,10 @@ export default function CommunityPage() {
             {posts.map((post) => (
               <CommunityPost
                 key={post.id}
-                id={post.id}
                 username={post.username}
                 time={post.time}
                 content={post.content}
                 platform={post.platform}
-                likes={post.likes}
-                comments={post.comments}
                 avatarSrc={post.avatarSrc}
               />
             ))}

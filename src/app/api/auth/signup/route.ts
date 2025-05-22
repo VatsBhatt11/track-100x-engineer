@@ -4,10 +4,10 @@ import bcrypt from "bcryptjs";
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json();
+    const { email, password: inputPassword } = await request.json();
 
     // Validate input
-    if (!email || !password) {
+    if (!email || !inputPassword) {
       return NextResponse.json(
         { error: "Email and password are required" },
         { status: 400 }
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(inputPassword, 10);
 
     // Create user
     const user = await prisma.user.create({
@@ -39,7 +39,8 @@ export async function POST(request: Request) {
     });
 
     // Remove password from response
-    const { password: _, ...userWithoutPassword } = user;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _unused, ...userWithoutPassword } = user;
 
     return NextResponse.json(
       { message: "User created successfully", user: userWithoutPassword },
