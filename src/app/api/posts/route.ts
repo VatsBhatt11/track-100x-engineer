@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -82,7 +82,7 @@ function extractPostId(url: string, platform: Platform): string | null {
   return null;
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     // Get the current user's session
     const session = await getServerSession({ request, ...authOptions });
@@ -187,7 +187,7 @@ export async function POST(request: Request) {
 }
 
 // Get all posts for the current user
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
     const session = await getServerSession({ req, ...authOptions });
 
