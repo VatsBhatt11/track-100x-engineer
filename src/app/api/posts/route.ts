@@ -85,7 +85,7 @@ function extractPostId(url: string, platform: Platform): string | null {
 export async function POST(request: Request) {
   try {
     // Get the current user's session
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession({ request, ...authOptions });
 
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -187,9 +187,9 @@ export async function POST(request: Request) {
 }
 
 // Get all posts for the current user
-export async function GET() {
+export async function GET(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession({ req, ...authOptions });
 
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
