@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 import { useEffect } from "react"
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
 import AppLayout from "@/components/layout/AppLayout"
 import StreakCalendar from "@/components/dashboard/StreakCalendar"
 import PostSubmission from "@/components/dashboard/PostSubmission"
@@ -60,7 +60,7 @@ const HomePage = () => {
           <h1 className={styles.dashboardTitle}>Dashboard</h1>
           <p className={styles.dashboardSubtitle}>Track your progress and stay motivated</p>
         </div>
-        <Button className={styles.postButton}>New Post</Button>
+        {/* <Button className={styles.postButton}>New Post</Button> */}
       </div>
 
       <div className={styles.sectionSpacing}>
