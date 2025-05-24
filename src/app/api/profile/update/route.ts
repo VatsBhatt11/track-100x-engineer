@@ -12,14 +12,11 @@ export async function PUT(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, username, bio } = body;
+    const { name, bio } = body;
 
     // Validate input
-    if (!name || !username) {
-      return NextResponse.json(
-        { error: "Name and username are required" },
-        { status: 400 }
-      );
+    if (!name) {
+      return NextResponse.json({ error: "Name is required" }, { status: 400 });
     }
 
     // Update user in database
@@ -29,10 +26,7 @@ export async function PUT(request: NextRequest) {
       },
       data: {
         name,
-        profileUrl: username, // Assuming profileUrl is used for username
         bio,
-        // You might want to store email notification preferences in a separate table
-        // For now, we'll just update the basic profile info
       },
     });
 
@@ -40,7 +34,6 @@ export async function PUT(request: NextRequest) {
       message: "Profile updated successfully",
       user: {
         name: updatedUser.name,
-        username: updatedUser.profileUrl,
         bio: updatedUser.bio,
       },
     });
