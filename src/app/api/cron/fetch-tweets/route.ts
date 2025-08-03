@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { TwitterApi, TweetV2 } from "twitter-api-v2";
+import { TwitterApi } from "twitter-api-v2";
+import { containsTargetHashtag } from "@/lib/twitter";
 
 // Define interface for Twitter user
 interface TwitterUser {
@@ -20,42 +21,7 @@ function extractTweetId(tweetUrl: string): string | null {
   return match ? match[1] : null;
 }
 
-// Interfaces for Twitter API types
-interface TwitterHashtagEntity {
-  start: number;
-  end: number;
-  tag: string;
-}
 
-// Helper function to check if a tweet contains the target hashtag
-function containsTargetHashtag(tweet: TweetV2): boolean {
-  // First check the tweet text directly
-  if (tweet.text) {
-    const text = tweet.text.toLowerCase();
-    if (
-      text.includes("#0to100xengineer") ||
-      text.includes("#0to100x") ||
-      text.includes("#0to100xengineers")
-    ) {
-      return true;
-    }
-  }
-
-  // Then check the entities if available
-  const hashtags = tweet.entities?.hashtags || [];
-  if (hashtags.length > 0) {
-    return hashtags.some((tag: TwitterHashtagEntity) => {
-      const tagLower = tag.tag.toLowerCase();
-      return (
-        tagLower === "0to100xengineer" ||
-        tagLower === "0to100x" ||
-        tagLower === "0to100xengineers"
-      );
-    });
-  }
-
-  return false;
-}
 
 // Function to fetch tweets for a user
 async function fetchUserTweets(username: string): Promise<string[]> {

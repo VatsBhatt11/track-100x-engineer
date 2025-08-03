@@ -5,7 +5,7 @@
  * to fetch tweets with the hashtag #0to100xengineer.
  */
 
-import { TwitterApi } from 'twitter-api-v2';
+import { TwitterApi, TweetV2, TweetEntityHashtagV2 } from 'twitter-api-v2';
 
 /**
  * Initialize the Twitter API client with the bearer token from environment variables.
@@ -27,26 +27,7 @@ export function extractTweetId(tweetUrl: string): string | null {
   return match ? match[1] : null;
 }
 
-/**
- * Interface for Twitter hashtag entity
- */
-interface TwitterHashtagEntity {
-  tag: string;
-  [key: string]: unknown;
-}
 
-/**
- * Interface for Twitter tweet object
- */
-interface TwitterTweet {
-  id: string;
-  text?: string;
-  entities?: {
-    hashtags?: TwitterHashtagEntity[];
-    [key: string]: unknown;
-  };
-  [key: string]: unknown;
-}
 
 /**
  * Check if a tweet contains the target hashtag (#0to100xengineer or variations).
@@ -54,12 +35,12 @@ interface TwitterTweet {
  * @param tweet - The tweet object from the Twitter API
  * @returns True if the tweet contains the target hashtag, false otherwise
  */
-export function containsTargetHashtag(tweet: TwitterTweet): boolean {
+export function containsTargetHashtag(tweet: TweetV2): boolean {
   const hashtags = tweet.entities?.hashtags || [];
-  return hashtags.some((tag: TwitterHashtagEntity) => 
+  return hashtags.some((tag: TweetEntityHashtagV2) => 
     tag.tag.toLowerCase() === '0to100xengineer' || 
     tag.tag.toLowerCase() === '0to100x' || 
-    tag.tag.toLowerCase() === '0to100xengineer'
+    tag.tag.toLowerCase() === '0to100xengineers'
   );
 }
 
