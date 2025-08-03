@@ -12,7 +12,7 @@ import AuthContainer from "@/components/auth/AuthContainer"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 
-import styles from './HomePage.module.css' // ✅ Import the styles
+import styles from './HomePage.module.css'
 
 const HomePage = () => {
   const { status } = useSession()

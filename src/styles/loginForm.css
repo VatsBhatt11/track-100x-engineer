@@ -72,6 +72,23 @@
   cursor: not-allowed;
 }
 
+.twitter-input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.twitter-at {
+  position: absolute;
+  left: 10px;
+  color: hsl(0 0% 45%);
+  z-index: 1;
+}
+
+.twitter-input {
+  padding-left: 25px;
+}
+
 .divider-container {
   display: flex;
   align-items: center;

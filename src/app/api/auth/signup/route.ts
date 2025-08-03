@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 
 export async function POST(request: Request) {
   try {
-    const { email, password: inputPassword } = await request.json();
+    const { email, password: inputPassword, twitterUsername } = await request.json();
 
     // Validate input
     if (!email || !inputPassword) {
@@ -35,6 +35,7 @@ export async function POST(request: Request) {
         email,
         password: hashedPassword,
         name: email.split("@")[0], // Use email username as default name
+        twitterUsername: twitterUsername || null,
       },
     });
 

@@ -14,6 +14,7 @@ const SignupForm = ({ onSwitchToLogin }: SignupFormProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [twitterUsername, setTwitterUsername] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -39,6 +40,7 @@ const SignupForm = ({ onSwitchToLogin }: SignupFormProps) => {
         body: JSON.stringify({
           email,
           password,
+          twitterUsername: twitterUsername.trim() || null,
         }),
       });
 
@@ -119,6 +121,26 @@ const SignupForm = ({ onSwitchToLogin }: SignupFormProps) => {
             />
           </div>
 
+          <div className="input-group">
+            <label htmlFor="twitterUsername" className="input-label">
+              Twitter Username (optional)
+            </label>
+            <div className="twitter-input-wrapper">
+              <span className="twitter-at">@</span>
+              <Input
+                id="twitterUsername"
+                type="text"
+                placeholder="username"
+                value={twitterUsername}
+                onChange={(e) => setTwitterUsername(e.target.value)}
+                className="input-field twitter-input"
+              />
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              We&apos;ll track your posts with #0to100xengineer hashtag
+            </p>
+          </div>
+
           <Button
             type="submit"
             className="login-button"
@@ -141,4 +163,4 @@ const SignupForm = ({ onSwitchToLogin }: SignupFormProps) => {
   );
 };
 
-export default SignupForm; 
+export default SignupForm;

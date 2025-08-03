@@ -17,6 +17,7 @@ model User {
   name          String?
   image         String? // profile picture URL
   profileUrl    String? // X or LinkedIn base URL
+  twitterUsername String? // Twitter/X username without @ symbol
   role          UserRole     @default(PARTICIPANT)
   bio           String?      @db.Text
   lastLogin     DateTime? // updated on each signin
